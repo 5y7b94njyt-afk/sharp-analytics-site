@@ -690,64 +690,14 @@
       min-width: 260px;
     }
 
-    .wallet-info {
+    .live-status-badge {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding: 16px 20px;
-      background: var(--color-surface-2);
-      border: 1px solid var(--color-border);
+      align-items: center;
+      padding: 12px 20px;
+      background: var(--color-accent-dim);
+      border: 1px solid rgba(110, 231, 183, 0.15);
       border-radius: 10px;
     }
-
-    .wallet-info-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .wallet-label {
-      font-size: 0.72rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--color-text-tertiary);
-    }
-
-    .wallet-address {
-      font-size: 0.82rem;
-      font-weight: 500;
-      font-family: 'SF Mono', 'Fira Code', 'Fira Mono', 'Cascadia Code', monospace;
-      color: var(--color-text-secondary);
-      cursor: pointer;
-      position: relative;
-    }
-
-    .wallet-address .addr-short { display: inline; }
-    .wallet-address .addr-full {
-      display: none;
-      font-size: 0.72rem;
-      word-break: break-all;
-      color: var(--color-text);
-    }
-    .wallet-address:hover .addr-short { display: none; }
-    .wallet-address:hover .addr-full { display: inline; }
-
-    .polygonscan-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--color-accent);
-      text-decoration: none;
-      transition: opacity 0.2s ease;
-      border: none;
-      background: none;
-    }
-    .polygonscan-link:hover { opacity: 0.75; }
-    .polygonscan-link svg { width: 13px; height: 13px; flex-shrink: 0; }
 
     .balance-badge {
       display: flex;
@@ -759,24 +709,10 @@
       border-radius: 8px;
     }
 
-    .balance-amount {
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: var(--color-accent);
-    }
-
     .balance-label {
-      font-size: 0.75rem;
+      font-size: 0.82rem;
       font-weight: 500;
-      color: var(--color-text-tertiary);
-    }
-
-    .balance-updated {
-      font-size: 0.7rem;
-      color: var(--color-text-tertiary);
-      text-align: right;
-      margin-top: 2px;
+      color: var(--color-text-secondary);
     }
 
     @media (max-width: 768px) {
@@ -1138,25 +1074,8 @@
           <p>Sharp Money is live-trading on Polymarket with real capital, powered by the Sharp Analytics Detection Suite. Real conviction. Real positions.</p>
         </div>
         <div class="live-trading-right">
-          <div class="wallet-info">
-            <div class="wallet-info-row">
-              <span class="wallet-label">Wallet</span>
-              <a href="https://polygonscan.com/address/0x7ed1d8fd81cfbe63ba4ee2f1a8a90ff339d3d044" target="_blank" rel="noopener" class="polygonscan-link" title="View on Polygonscan">
-                View on Polygonscan
-                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 1H1v12h12V9M8 1h5v5M13 1L6 8"/></svg>
-              </a>
-            </div>
-            <div class="wallet-address" title="0x7ed1d8fd81cfbe63ba4ee2f1a8a90ff339d3d044">
-              <span class="addr-short">0x7ed1d8fd8...9d3d044</span>
-              <span class="addr-full">0x7ed1d8fd81cfbe63ba4ee2f1a8a90ff339d3d044</span>
-            </div>
-          </div>
-          <div>
-            <div class="balance-badge">
-              <span class="balance-amount">~$191</span>
-              <span class="balance-label">portfolio + cash (USDC)</span>
-            </div>
-            <div class="balance-updated">Last updated: May 2026</div>
+          <div class="live-status-badge">
+            <span class="balance-label">Actively trading with real capital on Polymarket</span>
           </div>
         </div>
       </div>
