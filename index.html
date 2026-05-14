@@ -195,11 +195,11 @@
 
     /* ===== Pipeline Animation ===== */
     .pipeline { margin-top: 28px; padding: 32px 0 8px; }
-    .pipeline-track { display: flex; align-items: center; justify-content: center; gap: 0; position: relative; flex-wrap: nowrap; overflow-x: auto; }
+    .pipeline-track { display: flex; align-items: flex-start; justify-content: center; gap: 0; position: relative; flex-wrap: nowrap; overflow-x: auto; }
     .pipe-node { display: flex; flex-direction: column; align-items: center; gap: 8px; flex-shrink: 0; z-index: 2; }
-    .pipe-box { width: 120px; height: 52px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 600; color: var(--muted); letter-spacing: 0.02em; text-align: center; padding: 0 10px; transition: border-color 0.3s; }
+    .pipe-box { width: 156px; height: 64px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 600; color: var(--muted); letter-spacing: 0.02em; text-align: center; padding: 0 14px; transition: border-color 0.3s; }
     .pipe-box:hover { border-color: var(--accent-dim); }
-    .pipe-connector { width: 60px; height: 2px; background: var(--border); position: relative; overflow: visible; flex-shrink: 0; margin-bottom: 20px; }
+    .pipe-connector { width: 48px; height: 2px; background: var(--border); position: relative; overflow: visible; flex-shrink: 0; margin-top: 32px; }
     .pipe-dot { position: absolute; top: 50%; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; transform: translateY(-50%); opacity: 0; animation: flowdot 2.4s ease-in-out infinite; box-shadow: 0 0 8px var(--accent-glow); }
     .pipe-connector:nth-child(2) .pipe-dot { animation-delay: 0s; }
     .pipe-connector:nth-child(4) .pipe-dot { animation-delay: 0.5s; }
@@ -213,8 +213,8 @@
     }
     .pipe-sublabel { font-size: 0.58rem; color: var(--dim); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
     @media (max-width: 768px) {
-      .pipe-box { width: 90px; height: 44px; font-size: 0.6rem; }
-      .pipe-connector { width: 32px; }
+      .pipe-box { width: 110px; height: 52px; font-size: 0.65rem; }
+      .pipe-connector { width: 24px; }
     }
 
     /* ===== CTA ===== */

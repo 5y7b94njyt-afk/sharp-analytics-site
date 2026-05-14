@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edge Gap Visualization Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  :root {
+    --bg: #09090b;
+    --surface: #111114;
+    --surface-2: #18181c;
+    --border: rgba(255,255,255,0.06);
+    --text: #fafafa;
+    --text-2: #a1a1aa;
+    --text-3: #71717a;
+    --green: #6ee7b7;
+    --green-dim: rgba(110,231,183,0.1);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.1);
+    --amber: #fbbf24;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    padding: 40px 24px;
+  }
+
+  .concept-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-3);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .concept { margin-bottom: 64px; max-width: 900px; margin-left: auto; margin-right: auto; }
+
+  /* ===== CONCEPT A: Diverging Lines ===== */
+  .diverge-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diverge-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .diverge-header h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+
+  .diverge-header p {
+    font-size: 0.95rem;
+    color: var(--text-2);
+  }
+
+  .chart-container {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    margin-bottom: 32px;
+  }
+
+  .chart-container svg { width: 100%; height: 100%; }
+
+  .chart-zero-line {
+    stroke: rgba(255,255,255,0.08);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+  }
+
+  .line-informed {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 8px rgba(110,231,183,0.3));
+  }
+
+  .line-retail {
+    fill: none;
+    stroke: var(--red);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.7;
+  }
+
+  .area-informed {
+    fill: url(#greenGrad);
+    opacity: 0.15;
+  }
+
+  .area-retail {
+    fill: url(#redGrad);
+    opacity: 0.1;
+  }
+
+  .chart-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .diverge-legend {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .legend-label {
+    font-size: 0.8rem;
+    color: var(--text-2);
+    font-weight: 500;
+  }
+
+  .legend-value {
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  /* ===== CONCEPT B: Split Stats ===== */
+  .split-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .split-header {
+    text-align: center;
+    padding: 40px 48px 0;
+  }
+
+  .split-header h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+
+  .split-header p {
+    font-size: 0.95rem;
+    color: var(--text-2);
+    margin-bottom: 40px;
+  }
+
+  .split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+  }
+
+  .split-side {
+    padding: 40px 48px 48px;
+  }
+
+  .split-divider {
+    background: var(--border);
+    align-self: stretch;
+  }
+
+  .split-side-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 28px;
+  }
+
+  .split-side.retail .split-side-label { color: var(--red); }
+  .split-side.informed .split-side-label { color: var(--green); }
+
+  .split-metric {
+    margin-bottom: 24px;
+  }
+
+  .split-metric:last-child { margin-bottom: 0; }
+
+  .split-metric-value {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .split-side.retail .split-metric-value { color: var(--red); }
+  .split-side.informed .split-metric-value { color: var(--green); }
+
+  .split-metric-label {
+    font-size: 0.8rem;
+    color: var(--text-3);
+    font-weight: 500;
+  }
+
+  .split-bottom {
+    text-align: center;
+    padding: 24px 48px 32px;
+    border-top: 1px solid var(--border);
+    background: var(--surface-2);
+  }
+
+  .split-bottom-text {
+    font-size: 0.85rem;
+    color: var(--text-2);
+    font-weight: 500;
+  }
+
+  .split-bottom-text strong {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* ===== CONCEPT C: Multiplier Bar ===== */
+  .mult-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px;
+  }
+
+  .mult-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .mult-header h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+
+  .mult-header p {
+    font-size: 0.95rem;
+    color: var(--text-2);
+  }
+
+  .mult-rows { display: flex; flex-direction: column; gap: 20px; }
+
+  .mult-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .mult-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-2);
+    width: 140px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .mult-bar-track {
+    flex: 1;
+    height: 40px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .mult-bar-fill {
+    height: 100%;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 14px;
+    transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mult-bar-fill.retail {
+    background: linear-gradient(90deg, var(--red-dim), rgba(248,113,113,0.2));
+    border: 1px solid rgba(248,113,113,0.15);
+  }
+
+  .mult-bar-fill.informed {
+    background: linear-gradient(90deg, var(--green-dim), rgba(110,231,183,0.25));
+    border: 1px solid rgba(110,231,183,0.2);
+  }
+
+  .mult-bar-value {
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .mult-bar-value.retail { color: var(--red); }
+  .mult-bar-value.informed { color: var(--green); }
+
+  .mult-divider-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 4px 0;
+  }
+
+  .mult-divider-label {
+    width: 140px;
+    flex-shrink: 0;
+  }
+
+  .mult-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .mult-footer {
+    text-align: center;
+    margin-top: 36px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .mult-callout {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 24px;
+    background: var(--green-dim);
+    border: 1px solid rgba(110,231,183,0.15);
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--green);
+  }
+
+  @media (max-width: 640px) {
+    .split-grid { grid-template-columns: 1fr; }
+    .split-divider { height: 1px; width: 100%; }
+    .split-side { padding: 28px 32px; }
+    .mult-row { flex-direction: column; align-items: stretch; gap: 8px; }
+    .mult-label { text-align: left; width: auto; }
+    .mult-divider-row { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CONCEPT A: Diverging Performance Lines -->
+<div class="concept">
+  <div class="concept-label">Concept A — Diverging Lines</div>
+  <div class="diverge-card">
+    <div class="diverge-header">
+      <h2>The Information Gap</h2>
+      <p>Cumulative returns: typical trader vs informed actors detected by Sharp Analytics</p>
+    </div>
+    <div class="chart-container">
+      <svg viewBox="0 0 800 280" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="greenGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6ee7b7"/>
+            <stop offset="100%" stop-color="#6ee7b7" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="redGrad" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stop-color="#f87171"/>
+            <stop offset="100%" stop-color="#f87171" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Grid lines -->
+        <line x1="60" y1="40" x2="760" y2="40" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        <line x1="60" y1="100" x2="760" y2="100" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        <line x1="60" y1="140" x2="760" y2="140" class="chart-zero-line"/>
+        <line x1="60" y1="180" x2="760" y2="180" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        <line x1="60" y1="240" x2="760" y2="240" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+
+        <!-- Y-axis labels -->
+        <text x="50" y="44" text-anchor="end" class="chart-label" fill="#71717a">+26%</text>
+        <text x="50" y="104" text-anchor="end" class="chart-label" fill="#71717a">+12%</text>
+        <text x="50" y="144" text-anchor="end" class="chart-label" fill="#71717a">0%</text>
+        <text x="50" y="184" text-anchor="end" class="chart-label" fill="#71717a">−5%</text>
+        <text x="50" y="244" text-anchor="end" class="chart-label" fill="#71717a">−15%</text>
+
+        <!-- Informed actor area -->
+        <path d="M60,140 L130,138 200,134 270,128 340,118 410,104 480,88 550,72 620,58 690,48 760,38 L760,140 L60,140 Z" class="area-informed"/>
+        
+        <!-- Retail area -->
+        <path d="M60,140 L130,143 200,148 270,155 340,163 410,172 480,180 550,190 620,200 690,212 760,224 L760,140 L60,140 Z" class="area-retail"/>
+
+        <!-- Informed actor line -->
+        <path d="M60,140 L130,138 200,134 270,128 340,118 410,104 480,88 550,72 620,58 690,48 760,38" class="line-informed"/>
+
+        <!-- Retail line -->
+        <path d="M60,140 L130,143 200,148 270,155 340,163 410,172 480,180 550,190 620,200 690,212 760,224" class="line-retail"/>
+
+        <!-- End labels -->
+        <text x="770" y="34" class="chart-label" fill="#6ee7b7">+26%</text>
+        <text x="770" y="228" class="chart-label" fill="#f87171">−12%</text>
+
+        <!-- X-axis labels -->
+        <text x="60" y="268" class="chart-label" fill="#71717a">Entry</text>
+        <text x="410" y="268" text-anchor="middle" class="chart-label" fill="#71717a">T+24h</text>
+        <text x="760" y="268" text-anchor="end" class="chart-label" fill="#71717a">T+48h</text>
+      </svg>
+    </div>
+    <div class="diverge-legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--green)"></div>
+        <span class="legend-label">Informed actors (Sharp-detected)</span>
+        <span class="legend-value" style="color:var(--green)">+26.0%</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--red)"></div>
+        <span class="legend-label">Typical trader</span>
+        <span class="legend-value" style="color:var(--red)">−12.3%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT B: Split Stats -->
+<div class="concept">
+  <div class="concept-label">Concept B — Head-to-Head</div>
+  <div class="split-card">
+    <div class="split-header">
+      <h2>Two sides of every market</h2>
+      <p>The same event. Radically different outcomes.</p>
+    </div>
+    <div class="split-grid">
+      <div class="split-side retail">
+        <div class="split-side-label">Typical Trader</div>
+        <div class="split-metric">
+          <div class="split-metric-value">~47%</div>
+          <div class="split-metric-label">Effective win rate</div>
+        </div>
+        <div class="split-metric">
+          <div class="split-metric-value">−4.2%</div>
+          <div class="split-metric-label">Average return per trade</div>
+        </div>
+        <div class="split-metric">
+          <div class="split-metric-value">$0</div>
+          <div class="split-metric-label">Information edge</div>
+        </div>
+      </div>
+      <div class="split-divider"></div>
+      <div class="split-side informed">
+        <div class="split-side-label">Informed Actors</div>
+        <div class="split-metric">
+          <div class="split-metric-value">86%</div>
+          <div class="split-metric-label">Positive return rate (sharp + news)</div>
+        </div>
+        <div class="split-metric">
+          <div class="split-metric-value">+26%</div>
+          <div class="split-metric-label">Average return at T+24h</div>
+        </div>
+        <div class="split-metric">
+          <div class="split-metric-value">$143M</div>
+          <div class="split-metric-label">Estimated abnormal profit (2024–25)</div>
+        </div>
+      </div>
+    </div>
+    <div class="split-bottom">
+      <p class="split-bottom-text">Sharp Analytics detects these actors in real-time — so you can <strong>trade alongside them, not against them.</strong></p>
+    </div>
+  </div>
+</div>
+
+<!-- CONCEPT C: Comparative Bars -->
+<div class="concept">
+  <div class="concept-label">Concept C — Scale of the Gap</div>
+  <div class="mult-card">
+    <div class="mult-header">
+      <h2>The edge is real. The gap is massive.</h2>
+      <p>Measured performance: detected informed actors vs. the average participant</p>
+    </div>
+    <div class="mult-rows">
+      <div class="mult-row">
+        <div class="mult-label">Win Rate</div>
+        <div class="mult-bar-track">
+          <div class="mult-bar-fill retail" style="width:47%">
+            <span class="mult-bar-value retail">~47%</span>
+          </div>
+        </div>
+      </div>
+      <div class="mult-row">
+        <div class="mult-label"></div>
+        <div class="mult-bar-track">
+          <div class="mult-bar-fill informed" style="width:86%">
+            <span class="mult-bar-value informed">86%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mult-divider-row">
+        <div class="mult-divider-label"></div>
+        <div class="mult-divider-line"></div>
+      </div>
+
+      <div class="mult-row">
+        <div class="mult-label">Avg Return</div>
+        <div class="mult-bar-track">
+          <div class="mult-bar-fill retail" style="width:8%">
+            <span class="mult-bar-value retail" style="position:absolute;left:calc(8% + 12px);">−4.2%</span>
+          </div>
+        </div>
+      </div>
+      <div class="mult-row">
+        <div class="mult-label"></div>
+        <div class="mult-bar-track">
+          <div class="mult-bar-fill informed" style="width:62%">
+            <span class="mult-bar-value informed">+26.0%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mult-divider-row">
+        <div class="mult-divider-label"></div>
+        <div class="mult-divider-line"></div>
+      </div>
+
+      <div class="mult-row">
+        <div class="mult-label">Peak ROI</div>
+        <div class="mult-bar-track">
+          <div class="mult-bar-fill retail" style="width:5%">
+            <span class="mult-bar-value retail" style="position:absolute;left:calc(5% + 12px);">~2×</span>
+          </div>
+        </div>
+      </div>
+      <div class="mult-row">
+        <div class="mult-label"></div>
+        <div class="mult-bar-track">
+          <div class="mult-bar-fill informed" style="width:90%">
+            <span class="mult-bar-value informed">1,160× (Maduro insider)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mult-footer">
+      <div class="mult-callout">
+        Sharp Analytics puts you on the right side of this gap
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
