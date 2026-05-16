@@ -1,10 +1,10 @@
-# Sharp Analytics
+# Tessera
 
-One-page marketing site for Sharp Analytics — behavioral detection technology for decentralized markets.
+One-page marketing site for Tessera — institutional intelligence platform for prediction markets.
 
 ## Overview
 
-Sharp Analytics builds the Detection Suite: real-time identification of informed trading activity across decentralized markets. The flagship product, **Sharp Money**, applies this technology to prediction markets (Polymarket).
+Tessera builds the Detection Suite: real-time identification of informed trading activity across prediction markets. The flagship product, **Sharp Money**, applies this technology to decentralized prediction markets (Polymarket). **SharpBook** extends coverage to sports markets.
 
 ## Running
 
