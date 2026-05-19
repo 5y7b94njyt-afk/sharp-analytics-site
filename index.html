@@ -950,13 +950,9 @@
   <section class="cta" id="contact">
     <div class="container">
       <div class="cta-card reveal">
-        <p class="section-label">Get Started</p>
-        <h2 class="section-title">Subscribe to Intelligence</h2>
-        <p class="section-desc">Request a briefing on the Tessera Observatory and detection suite.</p>
-        <form class="cta-form" onsubmit="handleSubmit(event)">
-          <input type="email" placeholder="your@email.com" required aria-label="Email address">
-          <button type="submit">Request Briefing</button>
-        </form>
+        <p class="section-label">Transitioning</p>
+        <h2 class="section-title">A new platform is launching.</h2>
+        <p class="section-desc">This site is in transition. To request a briefing or institutional access, write to <a href="mailto:contact@oedipa.io" style="color:inherit;text-decoration:underline;text-underline-offset:4px;">contact@oedipa.io</a>.</p>
       </div>
     </div>
   </section>
@@ -965,7 +961,7 @@
   <footer>
     <div class="container">
       <div class="foot-l">&copy; 2026 Tessera. All rights reserved.</div>
-      <div class="foot-r"><a href="mailto:contact@tessera.io">Contact</a></div>
+      <div class="foot-r"><a href="mailto:contact@oedipa.io">Contact</a></div>
     </div>
   </footer>
 
@@ -1093,17 +1089,7 @@
       });
     });
 
-    // ===== Form =====
-    function handleSubmit(e) {
-      e.preventDefault();
-      const input = e.target.querySelector('input');
-      const btn = e.target.querySelector('button');
-      btn.textContent = 'Submitted';
-      btn.style.opacity = '0.7';
-      btn.disabled = true;
-      input.value = '';
-      setTimeout(() => { btn.textContent = 'Request Briefing'; btn.style.opacity = '1'; btn.disabled = false; }, 3000);
-    }
+    // ===== Form removed during transition =====
   </script>
 </body>
 </html>
